@@ -11,7 +11,6 @@ use MicrosoftAzure\Storage\Common\ServiceException;
 $connectionString = 'DefaultEndpointsProtocol=https;AccountName=' . getenv("STORAGE_ACCOUNT") . ';AccountKey=' . getenv("STORAGE_KEY") ;
 
 
-/*
 // Create blob REST proxy.
 $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($connectionString);
 
@@ -31,7 +30,7 @@ catch(ServiceException $e){
     $error_message = $e->getMessage();
     echo $code.": ".$error_message."<br />";
 }
-*/
+
 function getSASForBlob($accountName,$container, $blob, $resourceType, $permissions, $expiry,$key)
  {
  
