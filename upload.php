@@ -67,7 +67,7 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
  $_parts[] = 'sv=2014-02-14';
  $_parts[] = 'spr=https';
 
- 
+
  /* Create the signed blob URL */
  $_url = 'https://'
  .$accountName.'.blob.core.windows.net/'
@@ -75,8 +75,11 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
  . $blob . '?'
  . implode('&', $_parts);
  
+ //  $getBlobResult = $blobClient->getBlob($container, $blob);
+ 
  return $_url;
  }
+ 
 // Set time to UTC to match storage account time
 date_default_timezone_set('UTC');
 
@@ -90,16 +93,14 @@ $exp = $se;
 $act = getenv("STORAGE_ACCOUNT");
 $cont = 'secure';
 $blob = "myblob";
-//$blob = $blob_name;
 $key = getenv("STORAGE_KEY");
  
 $_signature = getSASForBlob($act,$cont,$blob,'b','r',$exp,$key);
 $_blobUrl = getBlobUrl($act,$cont,$blob,'b','r',$exp,$_signature);
 
-//echo $_signature;
-echo '<br /><a href="$_blobUrl">'$_blobUrl'</a>';
 
+ ?>
+ <?php echo '<br /><a href=' . $_blobUrl . '>' . $_blobUrl . '</a>'; ?> 
 
-?>
-</body>
+ </body>
 </html>

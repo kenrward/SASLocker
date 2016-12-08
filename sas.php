@@ -78,12 +78,6 @@ $key = getenv("STORAGE_KEY");
 $_signature = getSASForBlob($act,$cont,$blob,'b','r',$exp,$key);
 $_blobUrl = getBlobUrl($act,$cont,$blob,'b','r',$exp,$_signature);
 
-//echo $exp;
-
-echo $_signature . '<br />';
-
-echo $_blobUrl . '<br />';
-
 
  ?>
  <?php echo '<br /><a href=' . $_blobUrl . '>' . $_blobUrl . '</a>'; ?> 
