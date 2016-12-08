@@ -11,14 +11,14 @@ use MicrosoftAzure\Storage\Common\ServiceException;
 $connectionString = 'DefaultEndpointsProtocol=https;AccountName=' . getenv("STORAGE_ACCOUNT") . ';AccountKey=' . getenv("STORAGE_KEY") ;
 
 
-
+/*
 // Create blob REST proxy.
 $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($connectionString);
 
 $content = fopen($_FILES["fileToUpload"]["tmp_name"],r);
 
 $blob_name = $_FILES["fileToUpload"]["name"];
-/*
+
 try    {
     //Upload blob
     $blobRestProxy->createBlockBlob("secure", $blob_name, $content);
