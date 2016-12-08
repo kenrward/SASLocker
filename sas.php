@@ -71,7 +71,7 @@ $se=Date($datemask , strtotime("+300 seconds"));
 $exp = $se;
 $act = getenv("STORAGE_ACCOUNT");
 $cont = 'secure';
-$blob = $blob_name;
+$blob = "myblob";
 $key = getenv("STORAGE_KEY");
  
 $_signature = getSASForBlob($act,$cont,$blob,'b','r',$exp,$key);
