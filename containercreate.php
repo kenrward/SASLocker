@@ -53,7 +53,7 @@ catch(ServiceException $e){
 
  ?>
  <body>
- <?php echo '<p>Conainter Created</p>'; ?> 
+ <?php echo '<p>No error above means container created successfully, production code should check for this condition</p>'; ?> 
 
  </body>
 </html>
