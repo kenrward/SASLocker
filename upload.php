@@ -8,19 +8,13 @@ require_once 'vendor/autoload.php';
 
 use WindowsAzure\Common\ServicesBuilder;
 use MicrosoftAzure\Storage\Common\ServiceException;
-$connectionString = getenv("STORAGE_CONNECTION_STR");
+$connectionString = 'DefaultEndpointsProtocol=https;AccountName=' . getenv("STORAGE_ACCOUNT") . ';AccountKey=' . getenv("STORAGE_KEY") ;
+
 
 // Create blob REST proxy.
 $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($connectionString);
 
-echo $_FILES["fileToUpload"]["name"];
-echo $_FILES["fileToUpload"]["tmp_name"];
-
-//$content = fopen("myfile.txt", "r");
-
 $content = fopen($_FILES["fileToUpload"]["tmp_name"],r);
-
-echo $content;
 
 $blob_name = $_FILES["fileToUpload"]["name"];
 
