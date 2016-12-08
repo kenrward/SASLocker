@@ -9,7 +9,9 @@ require_once 'vendor/autoload.php';
 use WindowsAzure\Common\ServicesBuilder;
 use MicrosoftAzure\Storage\Common\ServiceException;
 
-$connectionString = getenv("STORAGE_CONNECTION_STR");
+$connectionString = 'DefaultEndpointsProtocol=https;AccountName=' . getenv("STORAGE_ACCOUNT") . ';AccountKey=' . getenv("STORAGE_KEY") . ';' ;
+
+echo $connectionString;
 
 function getSASForBlob($accountName,$container, $blob, $resourceType, $permissions, $expiry,$key)
  {
