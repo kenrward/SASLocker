@@ -10,7 +10,7 @@ use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 use MicrosoftAzure\Storage\Common\ServiceException;
 
 $connectionString = 'DefaultEndpointsProtocol=https;AccountName=' . getenv("STORAGE_ACCOUNT") . ';AccountKey=' . getenv("STORAGE_KEY") ;
-echo $connectionString . '\n';
+
 
 // Create blob REST proxy.
 $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($connectionString);
@@ -38,7 +38,7 @@ $createContainerOptions->addMetaData("key2", "value2");
 	
 try    {
     // Create container.
-    $blobRestProxy->createContainer("securelocker");
+    $blobRestProxy->createContainer("secure");
 }
 catch(ServiceException $e){
     // Handle exception based on error codes and messages.

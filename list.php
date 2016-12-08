@@ -9,7 +9,7 @@ require_once 'vendor/autoload.php';
 use WindowsAzure\Common\ServicesBuilder;
 use MicrosoftAzure\Storage\Common\ServiceException;
 
-$connectionString = getenv("STORAGE_CONNECTION_STR");
+$connectionString = 'DefaultEndpointsProtocol=https;AccountName=' . getenv("STORAGE_ACCOUNT") . ';AccountKey=' . getenv("STORAGE_KEY") ;
 
 
 // Create blob REST proxy.
@@ -18,7 +18,7 @@ $blobRestProxy = ServicesBuilder::getInstance()->createBlobService($connectionSt
 
 try    {
     // List blobs.
-    $blob_list = $blobRestProxy->listBlobs("mycontainer");
+    $blob_list = $blobRestProxy->listBlobs("secure");
     $blobs = $blob_list->getBlobs();
 
     foreach($blobs as $blob)
