@@ -76,7 +76,9 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
     }
 	
  $bloburl = $getBlobResult->getUrl();
-	
+ 
+ echo $bloburl;
+ 
   /* Create the signed blob URL */
  $_url =  $bloburl  . '?' . implode('&', $_parts);
  
