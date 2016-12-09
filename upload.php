@@ -56,7 +56,7 @@ catch(ServiceException $e){
 	
  $bbloburl = $getBlobResult->getUrl();
  
- echo $bbloburl;
+ echo $getBlobResult;
 
 function getSASForBlob($accountName,$container, $blob, $resourceType, $permissions, $expiry,$key)
  {
