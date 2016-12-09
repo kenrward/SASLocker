@@ -101,8 +101,8 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
  return $_url;
  }
  
-$_signature = getSASForBlob($act,$cont,$blob,'b','r',$exp,$key);
-$_blobUrl = getBlobUrl('b','r',$exp,$_signature,$bbloburl);
+//$_signature = getSASForBlob($act,$cont,$blob,'b','r',$exp,$key);
+//$_blobUrl = getBlobUrl('b','r',$exp,$_signature,$bbloburl);
 
 
  ?>
