@@ -35,6 +35,8 @@ $blob_name = $_FILES["fileToUpload"]["name"];
 try    {
     //Upload blob
     $blobRestProxy->createBlockBlob($cont , $blob_name, $content);
+	//Get Blob URL
+	$getBlobResult = $blobRestProxy->getBlob($cont, $blob_name);
 }
 catch(ServiceException $e){
     // Handle exception based on error codes and messages.
@@ -45,15 +47,7 @@ catch(ServiceException $e){
     echo $code.": ".$error_message."<br />";
 }
 
- // Get newly uploaded blob
- try {
-	$getBlobResult = $blobRestProxy->getBlob($cont, $blob_name);
-} catch (ServiceException $e) {
-	$code = $e->getCode();
-	$error_message = $e->getMessage();
-	echo $code.": ".$error_message.PHP_EOL;
-    }
-	
+
  $bbloburl = $getBlobResult->getUrl();
  echo "clean";
  echo $getBlobResult;
