@@ -9,6 +9,20 @@ require_once 'vendor/autoload.php';
 use WindowsAzure\Common\ServicesBuilder;
 use MicrosoftAzure\Storage\Common\ServiceException;
 $connectionString = 'DefaultEndpointsProtocol=https;AccountName=' . getenv("STORAGE_ACCOUNT") . ';AccountKey=' . getenv("STORAGE_KEY") ;
+// Set time to UTC to match storage account time
+date_default_timezone_set('UTC');
+
+// UTC Format required for SAS, https://docs.microsoft.com/en-us/azure/storage/storage-dotnet-shared-access-signature-part-1
+$datemask = "Y-m-d\TH:i:s\Z";
+
+// add time to today for Expiry UTC time
+$se=Date($datemask , strtotime("+300 seconds"));
+ 
+$exp = $se;
+$act = getenv("STORAGE_ACCOUNT");
+$cont = 'secure';
+$blob = $blob_name;
+$key = getenv("STORAGE_KEY");
 
 
 // Create blob REST proxy.
@@ -20,7 +34,7 @@ $blob_name = $_FILES["fileToUpload"]["name"];
 
 try    {
     //Upload blob
-    $blobRestProxy->createBlockBlob("secure", $blob_name, $content);
+    $blobRestProxy->createBlockBlob($cont , $blob_name, $content);
 }
 catch(ServiceException $e){
     // Handle exception based on error codes and messages.
@@ -30,6 +44,19 @@ catch(ServiceException $e){
     $error_message = $e->getMessage();
     echo $code.": ".$error_message."<br />";
 }
+
+ // Get newly uploaded blob
+ try {
+	$getBlobResult = $blobRestProxy->getBlob($container, $blob);
+} catch (ServiceException $e) {
+	$code = $e->getCode();
+	$error_message = $e->getMessage();
+	echo $code.": ".$error_message.PHP_EOL;
+    }
+	
+ $bbloburl = $getBlobResult->getUrl();
+ 
+ echo $bbloburl;
 
 function getSASForBlob($accountName,$container, $blob, $resourceType, $permissions, $expiry,$key)
  {
@@ -55,7 +82,7 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
  );
  }
  
- function getBlobUrl($accountName,$container,$blob,$resourceType,$permissions,$expiry,$_signature,$blobRestProxy)
+ function getBlobUrl($resourceType,$permissions,$expiry,$_signature,$bbloburl)
  {
  /* Create the signed query part */
  $_parts = array();
@@ -66,42 +93,16 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
  $_parts[] = 'sv=2014-02-14';
  $_parts[] = 'spr=https';
 
- // Get newly uploaded blob
- try {
-	$getBlobResult = $blobRestProxy->getBlob($container, $blob);
-} catch (ServiceException $e) {
-	$code = $e->getCode();
-	$error_message = $e->getMessage();
-	echo $code.": ".$error_message.PHP_EOL;
-    }
-	
- $bloburl = $getBlobResult->getUrl();
- 
- echo $bloburl;
+
  
   /* Create the signed blob URL */
- $_url =  $bloburl  . '?' . implode('&', $_parts);
+ $_url =  $bbloburl  . '?' . implode('&', $_parts);
  
  return $_url;
  }
  
-// Set time to UTC to match storage account time
-date_default_timezone_set('UTC');
-
-// UTC Format required for SAS, https://docs.microsoft.com/en-us/azure/storage/storage-dotnet-shared-access-signature-part-1
-$datemask = "Y-m-d\TH:i:s\Z";
-
-// add time to today for Expiry UTC time
-$se=Date($datemask , strtotime("+300 seconds"));
- 
-$exp = $se;
-$act = getenv("STORAGE_ACCOUNT");
-$cont = 'secure';
-$blob = $blob_name;
-$key = getenv("STORAGE_KEY");
- 
 $_signature = getSASForBlob($act,$cont,$blob,'b','r',$exp,$key);
-$_blobUrl = getBlobUrl($act,$cont,$blob,'b','r',$exp,$_signature,$blobRestProxy);
+$_blobUrl = getBlobUrl('b','r',$exp,$_signature,$bbloburl);
 
 
  ?>
