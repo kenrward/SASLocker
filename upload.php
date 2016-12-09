@@ -55,7 +55,7 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
  );
  }
  
- function getBlobUrl($accountName,$container,$blob,$resourceType,$permissions,$expiry,$_signature)
+ function getBlobUrl($accountName,$container,$blob,$resourceType,$permissions,$expiry,$_signature,$blobRestProxy)
  {
  /* Create the signed query part */
  $_parts = array();
@@ -68,7 +68,7 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
 
  // Get newly uploaded blob
  try {
-	$getBlobResult = $blobClient->getBlob($container, $blob);
+	$getBlobResult = $blobRestProxy->getBlob($container, $blob);
 } catch (ServiceException $e) {
 	$code = $e->getCode();
 	$error_message = $e->getMessage();
@@ -98,7 +98,7 @@ $blob = $blob_name;
 $key = getenv("STORAGE_KEY");
  
 $_signature = getSASForBlob($act,$cont,$blob,'b','r',$exp,$key);
-$_blobUrl = getBlobUrl($act,$cont,$blob,'b','r',$exp,$_signature);
+$_blobUrl = getBlobUrl($act,$cont,$blob,'b','r',$exp,$_signature,$blobRestProxy);
 
 
  ?>
