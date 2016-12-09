@@ -66,12 +66,17 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
  $_parts[] = 'sv=2014-02-14';
  $_parts[] = 'spr=https';
 
-
- /* Create the signed blob URL */
- $_url = 'https://'
- .$accountName.'.blob.core.windows.net/'
- . $container . '/'
- . $blob . '?'
+ // Get newly uploaded blob
+ try {
+	$getBlobResult = $blobClient->getBlob("mycontainer", "myblob");
+} catch (ServiceException $e) {
+	$code = $e->getCode();
+	$error_message = $e->getMessage();
+	echo $code.": ".$error_message.PHP_EOL;
+    }
+	
+  /* Create the signed blob URL */
+ $_url = $getBlobResult->getUrl() . '?'
  . implode('&', $_parts);
  
  //  $getBlobResult = $blobClient->getBlob($container, $blob);
