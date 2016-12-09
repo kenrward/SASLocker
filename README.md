@@ -1,6 +1,12 @@
 # Simple PHP SAS App
 This application will create a container in Azure Storage and allow for blob uploads.  Once the file is uploaded to the blob service, a Shared Access Signature is created that allows for timed access to the file.
 
+# Installation
+1. Create an Azure Storage Account
+2. Create and Azure Web App
+  1. Create App settings for storage account
+3. Link your forked repo to Azure
+
 # References
 * [Configure Azure Storage Connection Strings](https://docs.microsoft.com/en-us/azure/storage/storage-configure-connection-string)
 * [Using Shared Access Signatures (SAS)](https://docs.microsoft.com/en-us/azure/storage/storage-dotnet-shared-access-signature-part-1)
