@@ -47,7 +47,7 @@ catch(ServiceException $e){
 
  // Get newly uploaded blob
  try {
-	$getBlobResult = $blobRestProxy->getBlob($container, $blob);
+	$getBlobResult = $blobRestProxy->getBlob($cont, $blob_name);
 } catch (ServiceException $e) {
 	$code = $e->getCode();
 	$error_message = $e->getMessage();
