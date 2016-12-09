@@ -75,9 +75,10 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
 	echo $code.": ".$error_message.PHP_EOL;
     }
 	
+ $bloburl = $getBlobResult->getUrl();
+	
   /* Create the signed blob URL */
- $_url = $getBlobResult->getUrl() . '?'
- . implode('&', $_parts);
+ $_url =  $bloburl  . '?' . implode('&', $_parts);
  
  return $_url;
  }
