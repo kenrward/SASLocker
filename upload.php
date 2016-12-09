@@ -68,7 +68,7 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
 
  // Get newly uploaded blob
  try {
-	$getBlobResult = $blobClient->getBlob("mycontainer", "myblob");
+	$getBlobResult = $blobClient->getBlob($container, $blob);
 } catch (ServiceException $e) {
 	$code = $e->getCode();
 	$error_message = $e->getMessage();
@@ -78,8 +78,6 @@ function getSASForBlob($accountName,$container, $blob, $resourceType, $permissio
   /* Create the signed blob URL */
  $_url = $getBlobResult->getUrl() . '?'
  . implode('&', $_parts);
- 
- //  $getBlobResult = $blobClient->getBlob($container, $blob);
  
  return $_url;
  }
